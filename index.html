@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CV & Technical Portfolio of Camilo - Software Developer.">
+  <title>cami-dev.fr - CV & Portfolio</title>
+  <style>
+    /* ---------------------------------------------------------
+       Core Styles & Typography
+       --------------------------------------------------------- */
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap');
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #05070a;
+      color: #b5c2d5;
+      font-family: 'Fira Code', 'Courier New', Courier, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 2.5rem 1.5rem;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    /* Selection highlight */
+    ::selection {
+      background-color: #4af626;
+      color: #05070a;
+    }
+
+    /* Links - interactive command look */
+    a {
+      color: #4af626;
+      text-decoration: none;
+      transition: background-color 0.1s ease, color 0.1s ease;
+      padding: 0 4px;
+      font-weight: 500;
+    }
+
+    a:hover {
+      background-color: #4af626;
+      color: #05070a;
+    }
+
+    /* Terminal Prompts & Styling */
+    .terminal-line {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .prompt-symbol {
+      color: #4af626;
+    }
+
+    .command-text {
+      color: #ffffff;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
+      background-color: #4af626;
+      animation: blink 1.2s step-end infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* ---------------------------------------------------------
+       Language Switcher (CSS-only hack)
+       --------------------------------------------------------- */
+    .lang-selector {
+      display: none;
+    }
+
+    .lang-switch-container {
+      border: 1px dashed #1f2530;
+      padding: 1rem;
+      background-color: #0a0d14;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      width: 290px;
+      flex-shrink: 0;
+    }
+
+    .lang-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      width: 100%;
+    }
+
+    .lang-labels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .lang-label {
+      color: #707e94;
+      cursor: pointer;
+      padding: 2px 6px;
+      transition: background-color 0.1s ease, color 0.1s ease;
+      font-size: 0.85rem;
+    }
+
+    .lang-label:hover {
+      color: #4af626;
+      background-color: rgba(74, 246, 38, 0.1);
+    }
+
+    /* Show active language labels */
+    #lang-es:checked~* #label-es,
+    #lang-en:checked~* #label-en,
+    #lang-fr:checked~* #label-fr {
+      color: #05070a !important;
+      background-color: #4af626 !important;
+      font-weight: bold;
+    }
+
+    /* Hide all translated elements by default */
+    .lang-es,
+    .lang-en,
+    .lang-fr {
+      display: none !important;
+    }
+
+    /* Show the correct language elements depending on active selector */
+    #lang-es:checked~* .lang-es,
+    #lang-en:checked~* .lang-en,
+    #lang-fr:checked~* .lang-fr {
+      display: block !important;
+    }
+
+    #lang-es:checked~* span.lang-es,
+    #lang-en:checked~* span.lang-en,
+    #lang-fr:checked~* span.lang-fr,
+    #lang-es:checked~* strong.lang-es,
+    #lang-en:checked~* strong.lang-en,
+    #lang-fr:checked~* strong.lang-fr,
+    #lang-es:checked~* a.lang-es,
+    #lang-en:checked~* a.lang-en,
+    #lang-fr:checked~* a.lang-fr {
+      display: inline !important;
+    }
+
+    #lang-es:checked~* li.lang-es,
+    #lang-en:checked~* li.lang-en,
+    #lang-fr:checked~* li.lang-fr {
+      display: list-item !important;
+    }
+
+    /* ---------------------------------------------------------
+       Layout & Components
+       --------------------------------------------------------- */
+    header {
+      margin-bottom: 3rem;
+      border-bottom: 1px dashed #202630;
+      padding-bottom: 2rem;
+    }
+
+    .header-layout {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+
+    .header-main-info {
+      flex: 1;
+    }
+
+    .header-subtitle {
+      color: #707e94;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      color: #707e94;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    section {
+      border: 1px solid #1f2530;
+      padding: 1.75rem;
+      background-color: #0a0d14;
+    }
+
+    section h2 {
+      font-size: 1.1rem;
+      color: #4af626;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid #1f2530;
+      padding-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Section: Sobre mí */
+    .about-text {
+      color: #b5c2d5;
+      text-align: justify;
+    }
+
+    /* Section: Educación */
+    .education-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .education-item {
+      border-left: 2px solid #1f2530;
+      padding-left: 1.25rem;
+    }
+
+    .education-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .education-degree {
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .education-date {
+      color: #707e94;
+      font-size: 0.9rem;
+    }
+
+    .education-school {
+      color: #4af626;
+    }
+
+    /* Section: Stack Tecnológico */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .stack-group h3 {
+      font-size: 0.95rem;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px dashed #1f2530;
+      padding-bottom: 0.25rem;
+    }
+
+    .stack-list {
+      list-style: none;
+    }
+
+    .stack-list li {
+      margin-bottom: 0.4rem;
+      color: #b5c2d5;
+    }
+
+    .stack-list li::before {
+      content: "[+] ";
+      color: #4af626;
+      font-weight: bold;
+    }
+
+    /* Section: Proyectos Destacados */
+    .projects-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .project-item {
+      border-left: 2px solid #1f2530;
+      padding-left: 1.25rem;
+    }
+
+    .project-item:hover {
+      border-left-color: #4af626;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-title {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .project-tech {
+      color: #707e94;
+      font-size: 0.85rem;
+    }
+
+    .project-desc {
+      color: #b5c2d5;
+    }
+
+    /* Section: Experiencia */
+    .experience-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .experience-item {
+      border-left: 2px solid #1f2530;
+      padding-left: 1.25rem;
+    }
+
+    .experience-item:hover {
+      border-left-color: #4af626;
+    }
+
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .experience-title-company {
+      font-weight: bold;
+      font-size: 1rem;
+      color: #ffffff;
+    }
+
+    .experience-company {
+      color: #4af626;
+    }
+
+    .experience-date {
+      color: #707e94;
+      font-size: 0.9rem;
+    }
+
+    .experience-achievements {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .experience-achievements li {
+      position: relative;
+      padding-left: 1.25rem;
+    }
+
+    .experience-achievements li::before {
+      content: ">";
+      position: absolute;
+      left: 0;
+      color: #4af626;
+      font-weight: bold;
+    }
+
+    /* Section: Interests */
+    .plain-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .plain-list li {
+      position: relative;
+      padding-left: 2rem;
+      /* Increased to create a visible gap between [*] and text */
+      color: #b5c2d5;
+    }
+
+    .plain-list li::before {
+      content: "[*]";
+      position: absolute;
+      left: 0;
+      color: #4af626;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 4rem;
+      border-top: 1px dashed #202630;
+      padding-top: 2rem;
+      color: #707e94;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* ---------------------------------------------------------
+       Responsive Design Breakpoints
+       --------------------------------------------------------- */
+    @media (max-width: 650px) {
+      body {
+        padding: 1.5rem 1rem;
+      }
+
+      header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+      }
+
+      .header-layout {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .lang-switch-container {
+        width: 100%;
+      }
+
+      main {
+        gap: 2rem;
+      }
+
+      section {
+        padding: 1.25rem;
+      }
+
+      .project-header,
+      .experience-header,
+      .education-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hidden Language Selector Inputs (English checked by default) -->
+  <input type="radio" id="lang-en" name="language-select" checked class="lang-selector">
+  <input type="radio" id="lang-es" name="language-select" class="lang-selector">
+  <input type="radio" id="lang-fr" name="language-select" class="lang-selector">
+
+  <header>
+    <div class="header-layout">
+      <!-- Main Info (Left side on desktop, first on mobile) -->
+      <div class="header-main-info">
+        <div class="header-title">
+          <div class="terminal-line">
+            <span class="prompt-symbol">&gt;</span>
+            <span class="command-text">cami-dev.fr</span>
+            <span class="cursor"></span>
+          </div>
+        </div>
+
+        <div class="header-subtitle lang-es">Desarrollador de Software</div>
+        <div class="header-subtitle lang-en">Software Developer</div>
+        <div class="header-subtitle lang-fr">Développeur Software</div>
+
+        <nav aria-label="Enlaces de contacto">
+          <div class="contact-links">
+            <span>Email: <a
+                href="mailto:camiloalonso.gomezsandoval@gmail.com">camiloalonso.gomezsandoval@gmail.com</a></span>
+            <span>GitHub: <a href="https://github.com/ZekeogHanabi" target="_blank"
+                rel="noopener noreferrer">github.com/ZekeogHanabi</a></span>
+            <span>LinkedIn: <a href="https://linkedin.com/in/camilo" target="_blank"
+                rel="noopener noreferrer">linkedin.com/in/camilo</a></span>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Language Switcher Box (Right side on desktop, second on mobile) -->
+      <nav class="lang-switch-container" aria-label="Language options & fluency details">
+        <div class="lang-info">
+          <div class="terminal-line">
+            <span class="prompt-symbol">&gt;</span>
+            <span class="command-text lang-es">cat idiomas.txt</span>
+            <span class="command-text lang-en">cat languages.txt</span>
+            <span class="command-text lang-fr">cat langues.txt</span>
+          </div>
+          <span class="lang-es" style="color: #707e94; font-size: 0.85rem;">Idiomas: Español, Inglés, Francés (Fluido en
+            todos)</span>
+          <span class="lang-en" style="color: #707e94; font-size: 0.85rem;">Languages: English, Spanish, French (Fluent
+            in all)</span>
+          <span class="lang-fr" style="color: #707e94; font-size: 0.85rem;">Langues: Français, Anglais, Espagnol
+            (Courant dans toutes)</span>
+        </div>
+        <div class="lang-labels">
+          <label for="lang-en" class="lang-label" id="label-en">[English]</label>
+          <label for="lang-es" class="lang-label" id="label-es">[Español]</label>
+          <label for="lang-fr" class="lang-label" id="label-fr">[Français]</label>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- SECCIÓN 01: SOBRE MÍ -->
+    <section aria-labelledby="sec-sobre-mi">
+      <h2 id="sec-sobre-mi" class="lang-es">01. Sobre mí</h2>
+      <h2 id="sec-sobre-mi-en" class="lang-en">01. About me</h2>
+      <h2 id="sec-sobre-mi-fr" class="lang-fr">01. À propos de moi</h2>
+
+      <p class="about-text lang-es">
+        Estudiante de tercer año de Licenciatura en Informática en la Universidad de la Sorbona. Me distingo por mi
+        rigor, mi puntualidad y mi implicación en los proyectos académicos. Apasionado por las nuevas tecnologías y el
+        desarrollo de software, busco constantemente nuevos retos para enriquecer mis competencias. Autónomo, pero
+        también cómodo trabajando en equipo, me comprometo plenamente en cada misión que se me confía.
+      </p>
+      <p class="about-text lang-en">
+        Third-year Computer Science student at Sorbonne University. I am characterized by my rigor, my punctuality, and
+        my commitment to academic projects. Passionate about new technologies and software development, I am constantly
+        seeking new challenges to enrich my skills. Autonomous but also comfortable working in teams, I fully invest
+        myself in every mission entrusted to me.
+      </p>
+      <p class="about-text lang-fr">
+        Étudiant en troisième année de Licence en Informatique à l'Université de la Sorbonne, je me distingue par ma
+        rigueur, ma ponctualité et mon implication dans les projets académiques. Passionné par les nouvelles
+        technologies et le développement logiciel, je suis constamment à la recherche de nouveaux défis pour enrichir
+        mes compétences. Autonome, mais également à l'aise en travail d'équipe, je m'investis pleinement dans chaque
+        mission qui m'est confiée.
+      </p>
+    </section>
+
+    <!-- SECCIÓN 02: EDUCACIÓN -->
+    <section aria-labelledby="sec-educacion">
+      <h2 id="sec-educacion" class="lang-es">02. Educación</h2>
+      <h2 id="sec-educacion-en" class="lang-en">02. Education</h2>
+      <h2 id="sec-educacion-fr" class="lang-fr">02. Éducation</h2>
+
+      <div class="education-container">
+
+        <article class="education-item">
+          <div class="education-header">
+            <span class="education-degree lang-es">Licenciatura en Informática (En curso)</span>
+            <span class="education-degree lang-en">Licence in Computer Science (In progress)</span>
+            <span class="education-degree lang-fr">Licence Informatique (en cours)</span>
+            <span class="education-date">2022 - 2026</span>
+          </div>
+          <span class="education-school lang-es">Universidad de la Sorbona - Ciencias e Ingeniería, París</span>
+          <span class="education-school lang-en">Sorbonne University of Sciences and Engineering, Paris</span>
+          <span class="education-school lang-fr">Sorbonne Université de sciences et ingénierie, Paris</span>
+        </article>
+
+        <article class="education-item">
+          <div class="education-header">
+            <span class="education-degree lang-es">Bachillerato General (Sección Internacional Española)</span>
+            <span class="education-degree lang-en">General Baccalaureate (Spanish International Section)</span>
+            <span class="education-degree lang-fr">BAC Général (section internationale Espagnol)</span>
+            <span class="education-date">2019 - 2022</span>
+          </div>
+          <span class="education-school lang-es">Liceo Honoré de Balzac, París</span>
+          <span class="education-school lang-en">Lycée Honoré de Balzac, Paris</span>
+          <span class="education-school lang-fr">Lycée Honoré de Balzac, Paris</span>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 03: STACK TECNOLÓGICO -->
+    <section aria-labelledby="sec-stack">
+      <h2 id="sec-stack" class="lang-es">03. Stack Tecnológico</h2>
+      <h2 id="sec-stack-en" class="lang-en">03. Tech Stack</h2>
+      <h2 id="sec-stack-fr" class="lang-fr">03. Stack Technique</h2>
+
+      <div class="stack-grid">
+        <div class="stack-group">
+          <h3 class="lang-es">1. Core & Fundamentos</h3>
+          <h3 class="lang-en">1. Core & Foundations</h3>
+          <h3 class="lang-fr">1. Core & Fondations</h3>
+
+          <ul class="stack-list lang-es">
+            <li><strong>Lenguajes:</strong> Lenguaje C (Avanzado), Python (Avanzado)</li>
+            <li><strong>Bases de Datos:</strong> SQL Avanzado (PostgreSQL / MySQL / SQLite), Diseño Relacional</li>
+            <li><strong>Sistemas:</strong> Linux (Ubuntu / Bash), Git / GitHub, Lógica Proposicional</li>
+          </ul>
+          <ul class="stack-list lang-en">
+            <li><strong>Languages:</strong> C Language (Advanced), Python (Advanced)</li>
+            <li><strong>Databases:</strong> Advanced SQL (PostgreSQL / MySQL / SQLite), Relational Design</li>
+            <li><strong>Systems:</strong> Linux (Ubuntu / Bash), Git / GitHub, Propositional Logic</li>
+          </ul>
+          <ul class="stack-list lang-fr">
+            <li><strong>Langages :</strong> Langage C (Avancé), Python (Avancé)</li>
+            <li><strong>Bases de Données :</strong> SQL Avancé (PostgreSQL / MySQL / SQLite), Conception Relationnelle
+            </li>
+            <li><strong>Systèmes :</strong> Linux (Ubuntu / Bash), Git / GitHub, Logique Propositionnelle</li>
+          </ul>
+        </div>
+
+        <div class="stack-group">
+          <h3 class="lang-es">2. Backend & Automatización</h3>
+          <h3 class="lang-en">2. Backend & Automation</h3>
+          <h3 class="lang-fr">2. Backend & Automatisation</h3>
+
+          <ul class="stack-list lang-es">
+            <li><strong>APIs:</strong> FastAPI / Flask</li>
+            <li><strong>Automatización:</strong> BeautifulSoup / Playwright</li>
+            <li><strong>Librerías:</strong> Requests, Asyncio (Asincronía)</li>
+          </ul>
+          <ul class="stack-list lang-en">
+            <li><strong>APIs:</strong> FastAPI / Flask</li>
+            <li><strong>Automation:</strong> BeautifulSoup / Playwright</li>
+            <li><strong>Libraries:</strong> Requests, Asyncio (Asynchronous)</li>
+          </ul>
+          <ul class="stack-list lang-fr">
+            <li><strong>APIs :</strong> FastAPI / Flask</li>
+            <li><strong>Automatisation :</strong> BeautifulSoup / Playwright</li>
+            <li><strong>Bibliothèques :</strong> Requests, Asyncio (Asynchronisme)</li>
+          </ul>
+        </div>
+
+        <div class="stack-group">
+          <h3 class="lang-es">3. Web3 & Descentralización</h3>
+          <h3 class="lang-en">3. Web3 & Decentralization</h3>
+          <h3 class="lang-fr">3. Web3 & Décentralisation</h3>
+
+          <ul class="stack-list lang-es">
+            <li><strong>Smart Contracts:</strong> Solidity</li>
+            <li><strong>Herramientas:</strong> Hardhat / Foundry, Remix IDE</li>
+            <li><strong>Interacción:</strong> Web3.py (Python + Blockchain)</li>
+          </ul>
+          <ul class="stack-list lang-en">
+            <li><strong>Smart Contracts:</strong> Solidity</li>
+            <li><strong>Tools:</strong> Hardhat / Foundry, Remix IDE</li>
+            <li><strong>Interaction:</strong> Web3.py (Python + Blockchain)</li>
+          </ul>
+          <ul class="stack-list lang-fr">
+            <li><strong>Smart Contracts :</strong> Solidity</li>
+            <li><strong>Outils :</strong> Hardhat / Foundry, Remix IDE</li>
+            <li><strong>Interaction :</strong> Web3.py (Python + Blockchain)</li>
+          </ul>
+        </div>
+
+        <div class="stack-group">
+          <h3 class="lang-es">4. Frameworks & Entornos</h3>
+          <h3 class="lang-en">4. Frameworks & Environments</h3>
+          <h3 class="lang-fr">4. Frameworks & Environnements</h3>
+
+          <ul class="stack-list lang-es">
+            <li><strong>Runtime:</strong> Node.js / Express</li>
+            <li><strong>Frontend:</strong> HTML5 / CSS3 (Grid & Flexbox)</li>
+          </ul>
+          <ul class="stack-list lang-en">
+            <li><strong>Runtime:</strong> Node.js / Express</li>
+            <li><strong>Frontend:</strong> HTML5 / CSS3 (Grid & Flexbox)</li>
+          </ul>
+          <ul class="stack-list lang-fr">
+            <li><strong>Runtime :</strong> Node.js / Express</li>
+            <li><strong>Frontend :</strong> HTML5 / CSS3 (Grid & Flexbox)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 04: PROYECTOS DESTACADOS -->
+    <section aria-labelledby="sec-proyectos">
+      <h2 id="sec-proyectos" class="lang-es">04. Proyectos Destacados</h2>
+      <h2 id="sec-proyectos-en" class="lang-en">04. Featured Projects</h2>
+      <h2 id="sec-proyectos-fr" class="lang-fr">04. Projets Notables</h2>
+
+      <div class="projects-container">
+
+        <article class="project-item">
+          <div class="project-header">
+            <h3 class="project-title">
+              <a href="https://tft-augments-choices.camilitogomez80.workers.dev/" target="_blank" rel="noopener noreferrer">tft-augments-choices</a>
+            </h3>
+            <span class="project-tech">TypeScript, Cloudflare Edge, Hono</span>
+          </div>
+          <p class="project-desc lang-es">
+            Plataforma analítica de alto rendimiento para rastrear y visualizar los árboles de decisión de Aumentos (Augments) de jugadores profesionales (Challenger) en Teamfight Tactics. Construida completamente sobre el stack Edge de Cloudflare (Workers, D1, KV) con Hono y TypeScript estricto.
+          </p>
+          <p class="project-desc lang-en">
+            High-performance analytical platform to track and visualize professional (Challenger) players' Augment decision trees in Teamfight Tactics (TFT). Built entirely on the Cloudflare Edge Stack (Workers, D1, KV) using Hono and strict TypeScript.
+          </p>
+          <p class="project-desc lang-fr">
+            Plateforme analytique haute performance pour suivre et visualiser les arbres de décision d'optimisations (Augments) des joueurs professionnels (Challenger) dans Teamfight Tactics (TFT). Entièrement construite sur le stack Edge de Cloudflare (Workers, D1, KV) avec Hono et TypeScript strict.
+          </p>
+        </article>
+
+        <article class="project-item">
+          <div class="project-header">
+            <h3 class="project-title">
+              <a href="https://www.freedomcamp.com.co/" target="_blank" rel="noopener noreferrer">FreedomCamp</a>
+            </h3>
+            <span class="project-tech">WordPress, CSS3, PHP</span>
+          </div>
+          <p class="project-desc lang-es">
+            Plataforma web y landing page de registro para un evento internacional de belleza profesional y ciencia capilar en Colombia. Optimización de rendimiento y SEO local.
+          </p>
+          <p class="project-desc lang-en">
+            Web platform and registration landing page for an international professional beauty and hair science event in Colombia. Performance optimization and local SEO.
+          </p>
+          <p class="project-desc lang-fr">
+            Plateforme web et landing page d'inscription pour un événement international de beauté professionnelle et de science capillaire en Colombie. Optimisation des performances et SEO local.
+          </p>
+        </article>
+
+        <article class="project-item">
+          <div class="project-header">
+            <h3 class="project-title">
+              <a href="https://github.com/ZekeogHanabi/MyJobs" target="_blank" rel="noopener noreferrer">MyJobs</a>
+            </h3>
+            <span class="project-tech">Python, API France Travail</span>
+          </div>
+          <p class="project-desc lang-es">
+            Agregador de ofertas de empleo que consume la API de France Travail. Permite registrarse, guardar
+            preferencias y filtrar ofertas de forma personalizada.
+          </p>
+          <p class="project-desc lang-en">
+            Job aggregator consuming the France Travail API. Allows users to register, save preferences, and filter job
+            offers in a personalized way.
+          </p>
+          <p class="project-desc lang-fr">
+            Agrégateur d'offres d'emploi consommant l'API France Travail. Permet de s'inscrire, de sauvegarder des
+            préférences et de filtrer les offres de manière personnalisée.
+          </p>
+        </article>
+
+        <article class="project-item">
+          <div class="project-header">
+            <h3 class="project-title">
+              <a href="https://github.com/ZekeogHanabi/ChessOP" target="_blank" rel="noopener noreferrer">ChessOP</a>
+            </h3>
+            <span class="project-tech">TypeScript, HTML/CSS</span>
+          </div>
+          <p class="project-desc lang-es">
+            Herramienta interactiva de código abierto diseñada para el estudio y memorización de aperturas de ajedrez de
+            forma simple.
+          </p>
+          <p class="project-desc lang-en">
+            Open-source interactive tool designed for studying and memorizing chess openings simply.
+          </p>
+          <p class="project-desc lang-fr">
+            Outil interactif open-source conçu pour étudier et mémoriser simplement les ouvertures d'échecs.
+          </p>
+        </article>
+
+        <article class="project-item">
+          <div class="project-header">
+            <h3 class="project-title">
+              <a href="https://github.com/ZekeogHanabi/Gachapon" target="_blank" rel="noopener noreferrer">Gachapon</a>
+            </h3>
+            <span class="project-tech">JavaScript, Discord API</span>
+          </div>
+          <p class="project-desc lang-es">
+            Bot de Discord que implementa un sistema de gachapon para la colección de objetos personalizados e
+            inventarios de usuarios.
+          </p>
+          <p class="project-desc lang-en">
+            Discord bot implementing a gachapon system for custom item collections and user inventories.
+          </p>
+          <p class="project-desc lang-fr">
+            Bot Discord implémentant un système gachapon pour collecter des objets personnalisés et gérer les
+            inventaires utilisateurs.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 05: EXPERIENCIA -->
+    <section aria-labelledby="sec-experiencia">
+      <h2 id="sec-experiencia" class="lang-es">05. Experiencia</h2>
+      <h2 id="sec-experiencia-en" class="lang-en">05. Experience</h2>
+      <h2 id="sec-experiencia-fr" class="lang-fr">05. Expérience</h2>
+
+      <div class="experience-container">
+
+        <article class="experience-item">
+          <div class="experience-header">
+            <!-- Spanish Header -->
+            <span class="experience-title-company lang-es">
+              Coordinador de proyectos junior / Gestión de redes sociales en <span class="experience-company"><a
+                  href="https://www.over-group.io/" target="_blank" rel="noopener noreferrer">Over-group</a></span>
+            </span>
+            <span class="experience-date lang-es">París | Junio 2023 - Septiembre 2024</span>
+
+            <!-- English Header -->
+            <span class="experience-title-company lang-en">
+              Junior Project Coordinator / Social Media Management at <span class="experience-company"><a
+                  href="https://www.over-group.io/" target="_blank" rel="noopener noreferrer">Over-group</a></span>
+            </span>
+            <span class="experience-date lang-en">Paris | June 2023 - September 2024</span>
+
+            <!-- French Header -->
+            <span class="experience-title-company lang-fr">
+              Coordinateur de projet junior / Gestion réseaux sociaux chez <span class="experience-company"><a
+                  href="https://www.over-group.io/" target="_blank" rel="noopener noreferrer">Over-group</a></span>
+            </span>
+            <span class="experience-date lang-fr">Paris | Juin 2023 - Septembre 2024</span>
+          </div>
+
+          <!-- Achievements in Spanish -->
+          <ul class="experience-achievements lang-es">
+            <li>Participación en la gestión de proyectos innovadores en el universo blockchain, particularmente bots
+              descentralizados.</li>
+            <li>Realización de investigaciones exhaustivas sobre el funcionamiento de proyectos blockchain y sus
+              estrategias de lanzamiento (tokenomics, NFT, plataformas de despliegue, etc.).</li>
+            <li>Contribución a la planificación y coordinación de las etapas de desarrollo y comercialización.</li>
+            <li>Gestión de redes sociales y dinamización de la comunidad en línea (Discord, Twitter, etc.) para asegurar
+              el compromiso y el crecimiento de la audiencia.</li>
+          </ul>
+
+          <!-- Achievements in English -->
+          <ul class="experience-achievements lang-en">
+            <li>Participation in the management of innovative projects in the blockchain space, specifically
+              decentralized bots.</li>
+            <li>Conducting in-depth research on the operation of blockchain projects and their launch strategies
+              (tokenomics, NFTs, deployment platforms, etc.).</li>
+            <li>Contribution to the planning and coordination of development and go-to-market stages.</li>
+            <li>Social media management and online community moderation (Discord, Twitter, etc.) to ensure audience
+              engagement and growth.</li>
+          </ul>
+
+          <!-- Achievements in French -->
+          <ul class="experience-achievements lang-fr">
+            <li>Participation à la gestion de projets innovants dans l’univers de la blockchain, notamment des bots
+              décentralisés.</li>
+            <li>Réalisation de recherches approfondies sur le fonctionnement des projets blockchain et leurs stratégies
+              de lancement (tokenomics, NFT, plateformes de déploiement, etc.).</li>
+            <li>Contribution à la planification et à la coordination des étapes de développement et de mise en marché.
+            </li>
+            <li>Gestion des réseaux sociaux et animation de la communauté en ligne (Discord, Twitter, etc.) pour assurer
+              l'engagement et la croissance de l’audience.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 06: CENTROS DE INTERÉS -->
+    <section aria-labelledby="sec-intereses">
+      <h2 id="sec-intereses" class="lang-es">06. Centros de Interés</h2>
+      <h2 id="sec-intereses-en" class="lang-en">06. Interests</h2>
+      <h2 id="sec-intereses-fr" class="lang-fr">06. Centres d'intérêt</h2>
+
+      <ul class="plain-list lang-es">
+        <li>Ajedrez</li>
+        <li>Lectura</li>
+        <li>Economía</li>
+        <li>Nuevas Tecnologías</li>
+        <li>Cine</li>
+      </ul>
+      <ul class="plain-list lang-en">
+        <li>Chess</li>
+        <li>Reading</li>
+        <li>Economics</li>
+        <li>New Technologies</li>
+        <li>Cinema</li>
+      </ul>
+      <ul class="plain-list lang-fr">
+        <li>Échecs</li>
+        <li>Lecture</li>
+        <li>Économie</li>
+        <li>Nouvelles technologies</li>
+        <li>Cinéma</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <div class="terminal-line">
+      <span class="prompt-symbol">&gt;</span>
+      <span class="command-text">exit</span>
+    </div>
+    <div>
+      <span class="lang-es">sesión_cerrada: 0e5b3fdd</span>
+      <span class="lang-en">session_closed: 0e5b3fdd</span>
+      <span class="lang-fr">session_clôturée: 0e5b3fdd</span>
+    </div>
+  </footer>
+
+</body>
+
+</html>
